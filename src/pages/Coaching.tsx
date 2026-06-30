@@ -942,7 +942,7 @@ export default function Coaching() {
                       <select 
                         value={selectedSchedule}
                         onChange={(e) => setSelectedSchedule(e.target.value)}
-                        className="w-full px-4 py-3 rounded-xl border border-gray-200 focus:outline-none focus:border-blue-600 text-sm bg-white font-medium"
+                        className="w-full pl-4 pr-6 py-3 rounded-xl border border-gray-200 focus:outline-none focus:border-blue-600 text-sm bg-white font-medium"
                       >
                         {checkoutProgram.schedule.map((time, idx) => (
                           <option key={idx} value={time}>{time}</option>
