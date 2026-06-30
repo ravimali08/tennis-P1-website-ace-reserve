@@ -171,14 +171,8 @@ export default function Events() {
       return;
     }
 
-    if (selectedEvent.price === "Free") {
-      // Free event: Skip payment step and go straight to Step 3
-      setTicketId(`AR-EVT-${Math.floor(100000 + Math.random() * 900000)}`);
-      setCheckoutStep(3);
-    } else {
-      // Paid event: Go to Payment step
-      setCheckoutStep(2);
-    }
+    setTicketId(`AR-EVT-${Math.floor(100000 + Math.random() * 900000)}`);
+    setCheckoutStep(2);
   };
 
   const handlePaymentSubmit = (e: React.FormEvent) => {
@@ -610,17 +604,13 @@ export default function Events() {
                       }`}>1</span>
                       <span className="text-xs font-semibold text-white/90">Info</span>
                     </div>
-                    {selectedEvent.price !== "Free" && (
-                      <>
-                        <div className="h-0.5 bg-white/20 w-8 self-center"></div>
-                        <div className="flex items-center gap-2">
-                          <span className={`w-6 h-6 rounded-full flex items-center justify-center text-xs font-bold ${
-                            checkoutStep >= 2 ? 'bg-blue-600 text-white' : 'bg-white/10 text-white/50'
-                          }`}>2</span>
-                          <span className={`text-xs font-semibold ${checkoutStep >= 2 ? 'text-white' : 'text-white/40'}`}>Payment</span>
-                        </div>
-                      </>
-                    )}
+                    <div className="h-0.5 bg-white/20 w-8 self-center"></div>
+                    <div className="flex items-center gap-2">
+                      <span className={`w-6 h-6 rounded-full flex items-center justify-center text-xs font-bold ${
+                        checkoutStep >= 2 ? 'bg-blue-600 text-white' : 'bg-white/10 text-white/50'
+                      }`}>2</span>
+                      <span className={`text-xs font-semibold ${checkoutStep >= 2 ? 'text-white' : 'text-white/40'}`}>Payment</span>
+                    </div>
                     <div className="h-0.5 bg-white/20 w-8 self-center"></div>
                     <div className="flex items-center gap-2">
                       <span className={`w-6 h-6 rounded-full flex items-center justify-center text-xs font-bold ${
@@ -865,7 +855,7 @@ export default function Events() {
                               type="submit"
                               className="bg-blue-600 hover:bg-blue-700 text-white px-8 py-3.5 rounded-full font-bold text-sm transition-all shadow-md shadow-blue-600/10"
                             >
-                              Pay {selectedEvent.price} Securely
+                              {selectedEvent.price === "Free" ? "Confirm Free Registration" : `Pay ${selectedEvent.price} Securely`}
                             </button>
                           </div>
                         </form>

@@ -959,8 +959,8 @@ export default function Tournaments() {
               {step === 3 && (
                 /* Step 3: Success Pass Screen */
                 <div className="text-center space-y-8 py-4 max-w-2xl mx-auto bg-white p-8 rounded-3xl border border-gray-150 shadow-sm animate-fade-in">
-                  <div className="w-16 h-16 rounded-full bg-green-50 border border-green-200 flex items-center justify-center mx-auto">
-                    <CheckCircle className="w-10 h-10 text-green-600" />
+                  <div className="w-16 h-16 rounded-full bg-blue-50 border border-blue-200 flex items-center justify-center mx-auto">
+                    <CheckCircle className="w-10 h-10 text-blue-600" />
                   </div>
                   
                   <div>
