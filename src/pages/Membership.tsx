@@ -422,6 +422,8 @@ export default function Membership() {
       `}</style>
 
       <div className="container mx-auto px-6 md:px-12 no-print">
+        {checkoutPlan === null ? (
+          <>
         {/* Header */}
         <div className="text-center max-w-3xl mx-auto mb-16">
           <h1 className="text-4xl md:text-5xl font-black text-gray-900 tracking-tight mb-6">Choose Your Membership</h1>
@@ -560,12 +562,9 @@ export default function Membership() {
             ))}
           </div>
         </div>
-      </div>
-
-      {/* CHECKOUT PORTAL MODAL OVERLAY */}
-      {checkoutPlan && (
-        <div className="fixed inset-0 bg-black/60 backdrop-blur-sm z-50 flex items-center justify-center p-4 overflow-y-auto no-print">
-          <div className="bg-white rounded-[2.5rem] w-full max-w-2xl max-h-[90vh] overflow-y-auto border border-gray-150 shadow-2xl relative my-8">
+          </>
+        ) : (
+          <div className="bg-white rounded-[2.5rem] w-full max-w-2xl border border-gray-150 shadow-2xl relative my-8 mx-auto">
             
             {/* Modal Close */}
             {checkoutStep !== 3 && (
@@ -996,8 +995,8 @@ export default function Membership() {
             )}
 
           </div>
-        </div>
-      )}
+        )}
+      </div>
 
     </div>
   );
