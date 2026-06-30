@@ -232,7 +232,8 @@ export default function Tournaments() {
     const newErrors = [];
     if (!formName.trim()) newErrors.push("Player Name is required");
     if (!formEmail.trim()) newErrors.push("Email is required");
-    if (!formPhone.trim()) newErrors.push("Phone number is required");
+    const cleanPhone = formPhone.replace(/\D/g, '');
+    if (cleanPhone.length !== 10) newErrors.push("Phone number must be exactly 10 digits");
     if (!formAge.trim()) newErrors.push("Age is required");
     
     if (newErrors.length > 0) {
@@ -248,8 +249,16 @@ export default function Tournaments() {
     const newErrors = [];
     if (!cardName.trim()) newErrors.push("Cardholder Name is required");
     if (cardNumber.replace(/\s/g, '').length !== 16) newErrors.push("Enter a valid 16-digit Card Number");
-    if (!cardExpiry.includes("/")) newErrors.push("Enter expiry in MM/YY format");
-    if (cardCvc.length < 3) newErrors.push("Enter a valid 3-digit CVC code");
+    if (cardExpiry.length !== 5) {
+      newErrors.push("Enter expiry in MM/YY format");
+    } else {
+      const [m] = cardExpiry.split("/");
+      const month = parseInt(m, 10);
+      if (isNaN(month) || month < 1 || month > 12) {
+        newErrors.push("Please enter a valid expiration month (01-12)");
+      }
+    }
+    if (cardCvc.replace(/\D/g, '').length !== 3) newErrors.push("Enter a valid 3-digit CVV code");
 
     if (newErrors.length > 0) {
       setErrors(newErrors);
@@ -646,8 +655,8 @@ export default function Tournaments() {
                         type="tel"
                         required
                         value={formPhone}
-                        onChange={(e) => setFormPhone(e.target.value)}
-                        placeholder="e.g. +1 (305) 555-0100"
+                        onChange={(e) => setFormPhone(e.target.value.replace(/\D/g, '').substring(0, 10))}
+                        placeholder="e.g. 3055550100"
                         className="w-full px-4 py-3 rounded-xl border border-gray-200 focus:outline-none focus:border-blue-600 text-sm"
                       />
                     </div>
@@ -885,7 +894,7 @@ export default function Tournaments() {
                               type="password"
                               required
                               value={cardCvc}
-                              onChange={(e) => setCardCvc(e.target.value.replace(/[^0-9]/g, ''))}
+                              onChange={(e) => setCardCvc(e.target.value.replace(/[^0-9]/g, '').substring(0, 3))}
                               onFocus={() => setIsCardFlipped(true)}
                               placeholder="•••"
                               className="w-full px-4 py-3 rounded-xl border border-gray-200 focus:outline-none focus:border-blue-600 text-sm text-center"

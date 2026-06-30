@@ -143,7 +143,7 @@ export default function BookCourt() {
     const errs = [];
     if (!name.trim()) errs.push("Full Name is required");
     if (!email.trim()) errs.push("Email Address is required");
-    if (!phone.trim()) errs.push("Phone Number is required");
+    if (phone.replace(/\D/g, '').length !== 10) errs.push("Phone Number must be exactly 10 digits");
     if (!selectedDate) errs.push("Please select a booking date");
     if (!selectedTime) errs.push("Please select a time slot");
 
@@ -171,8 +171,16 @@ export default function BookCourt() {
     const errs = [];
     if (!cardName.trim()) errs.push("Cardholder Name is required");
     if (cardNumber.replace(/\s/g, '').length !== 16) errs.push("Enter a valid 16-digit card number");
-    if (!cardExpiry.includes("/")) errs.push("Enter expiration date in MM/YY format");
-    if (cardCvc.length < 3) errs.push("Enter a valid 3-digit CVC code");
+    if (cardExpiry.length !== 5) {
+      errs.push("Enter expiration date in MM/YY format");
+    } else {
+      const [m] = cardExpiry.split("/");
+      const month = parseInt(m, 10);
+      if (isNaN(month) || month < 1 || month > 12) {
+        errs.push("Please enter a valid expiration month (01-12)");
+      }
+    }
+    if (cardCvc.replace(/\D/g, '').length !== 3) errs.push("Enter a valid 3-digit CVV code");
 
     if (errs.length > 0) {
       setPaymentErrors(errs);
@@ -410,8 +418,8 @@ export default function BookCourt() {
                     type="tel"
                     required
                     value={phone}
-                    onChange={(e) => setPhone(e.target.value)}
-                    placeholder="e.g. +1 (305) 555-0100"
+                    onChange={(e) => setPhone(e.target.value.replace(/\D/g, '').substring(0, 10))}
+                    placeholder="e.g. 3055550100"
                     className="w-full px-4 py-3 rounded-xl border border-gray-200 focus:outline-none focus:border-blue-600 text-sm bg-white"
                   />
                 </div>
@@ -689,7 +697,7 @@ export default function BookCourt() {
                           required
                           maxLength={3}
                           value={cardCvc}
-                          onChange={(e) => setCardCvc(e.target.value.replace(/[^0-9]/g, ''))}
+                          onChange={(e) => setCardCvc(e.target.value.replace(/[^0-9]/g, '').substring(0, 3))}
                           onFocus={() => setIsCardFlipped(true)}
                           placeholder="•••"
                           className="w-full px-4 py-3 rounded-xl border border-gray-250 focus:outline-none focus:border-blue-600 text-sm text-center bg-white"

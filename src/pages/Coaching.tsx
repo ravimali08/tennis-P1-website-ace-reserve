@@ -90,7 +90,8 @@ export default function Coaching() {
     const errors = [];
     if (!name.trim()) errors.push("Full Name is required.");
     if (!email.trim() || !/\S+@\S+\.\S+/.test(email)) errors.push("Please provide a valid email address.");
-    if (!phone.trim() || phone.replace(/\D/g, '').length < 8) errors.push("Please enter a valid phone number.");
+    const cleanPhone = phone.replace(/\D/g, '');
+    if (cleanPhone.length !== 10) errors.push("Phone number must be exactly 10 digits.");
     if (!selectedSchedule) errors.push("Please select a session schedule.");
     setValidationErrors(errors);
     return errors.length === 0;
@@ -107,8 +108,16 @@ export default function Coaching() {
     const errors = [];
     if (!cardName.trim()) errors.push("Cardholder Name is required.");
     if (cardNumber.replace(/\s/g, '').length !== 16) errors.push("Please enter a valid 16-digit card number.");
-    if (cardExpiry.length !== 5) errors.push("Please enter a valid expiry date (MM/YY).");
-    if (cardCvc.length !== 3) errors.push("Please enter a valid 3-digit CVV code.");
+    if (cardExpiry.length !== 5) {
+      errors.push("Please enter card expiry in MM/YY format.");
+    } else {
+      const [m] = cardExpiry.split("/");
+      const month = parseInt(m, 10);
+      if (isNaN(month) || month < 1 || month > 12) {
+        errors.push("Please enter a valid expiration month (01-12).");
+      }
+    }
+    if (cardCvc.replace(/\D/g, '').length !== 3) errors.push("Please enter a valid 3-digit CVV code.");
     setPaymentErrors(errors);
     return errors.length === 0;
   };
@@ -923,7 +932,7 @@ export default function Coaching() {
                         type="tel" 
                         required
                         value={phone}
-                        onChange={(e) => setPhone(e.target.value)}
+                        onChange={(e) => setPhone(e.target.value.replace(/\D/g, '').substring(0, 10))}
                         placeholder="(305) 555-0199"
                         className="w-full px-4 py-3 rounded-xl border border-gray-200 focus:outline-none focus:border-blue-600 text-sm bg-white font-medium"
                       />

@@ -184,10 +184,9 @@ export default function Membership() {
       return;
     }
 
-    // Phone validation
     const cleanPhone = userPhone.replace(/\D/g, "");
-    if (cleanPhone.length < 10) {
-      alert("Please enter a valid phone number (at least 10 digits).");
+    if (cleanPhone.length !== 10) {
+      alert("Please enter a valid 10-digit phone number.");
       return;
     }
 
