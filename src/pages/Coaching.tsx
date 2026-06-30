@@ -847,7 +847,7 @@ export default function Coaching() {
         {/* Registration/Checkout Modal */}
         {checkoutProgramId !== null && checkoutProgram && (
           <div className="fixed inset-0 bg-black/60 backdrop-blur-sm z-50 flex items-center justify-center p-4 overflow-y-auto">
-            <div className={`bg-white rounded-[2.5rem] w-full ${checkoutStep === 3 ? 'max-w-xl' : 'max-w-2xl'} overflow-hidden border border-gray-150 shadow-2xl relative my-8 text-left`}>
+            <div className={`bg-white rounded-[2.5rem] w-full ${checkoutStep === 3 ? 'max-w-xl' : 'max-w-2xl'} max-h-[90vh] overflow-y-auto border border-gray-150 shadow-2xl relative my-8 text-left`}>
               
               {/* Steps Header (Only shown for Step 1 & 2) */}
               {checkoutStep < 3 && (

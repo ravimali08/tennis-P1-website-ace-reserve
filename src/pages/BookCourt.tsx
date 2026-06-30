@@ -619,7 +619,7 @@ export default function BookCourt() {
       {/* Checkout Screen Modal */}
       {isCheckoutOpen && (
         <div className="fixed inset-0 bg-black/60 backdrop-blur-sm z-50 flex items-center justify-center p-4">
-          <div className="bg-white rounded-[2.5rem] w-full max-w-lg overflow-hidden border border-gray-100 shadow-2xl relative animate-fade-in my-8">
+          <div className="bg-white rounded-[2.5rem] w-full max-w-lg max-h-[90vh] overflow-y-auto border border-gray-100 shadow-2xl relative animate-fade-in my-8">
             {/* Modal Header */}
             <div className="bg-blue-950 text-white px-8 py-6 flex justify-between items-center relative">
               <div>
@@ -889,7 +889,7 @@ export default function BookCourt() {
       {/* Success Booking Confirmation Modal */}
       {isSuccessOpen && (
         <div className="fixed inset-0 bg-black/60 backdrop-blur-sm z-50 flex items-center justify-center p-4">
-          <div className="bg-white rounded-[2.5rem] w-full max-w-lg overflow-hidden border border-gray-100 shadow-2xl relative animate-fade-in my-8">
+          <div className="bg-white rounded-[2.5rem] w-full max-w-lg max-h-[90vh] overflow-y-auto border border-gray-100 shadow-2xl relative animate-fade-in my-8">
             <div className="p-8 text-center space-y-6">
               
                <div className="w-16 h-16 rounded-full bg-blue-50 border border-blue-200 flex items-center justify-center mx-auto no-print">

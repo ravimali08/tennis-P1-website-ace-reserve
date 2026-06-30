@@ -474,7 +474,7 @@ export default function Events() {
         {/* EVENTS WIZARD OVERLAY MODAL */}
         {selectedEvent && (
           <div className="fixed inset-0 bg-black/60 backdrop-blur-sm z-50 flex items-center justify-center p-4 overflow-y-auto no-print">
-            <div className={`bg-white rounded-[2.5rem] w-full ${checkoutStep === 0 ? 'max-w-4xl' : 'max-w-2xl'} overflow-hidden border border-gray-150 shadow-2xl relative my-8 text-left`}>
+            <div className={`bg-white rounded-[2.5rem] w-full ${checkoutStep === 0 ? 'max-w-4xl' : 'max-w-2xl'} max-h-[90vh] overflow-y-auto border border-gray-150 shadow-2xl relative my-8 text-left`}>
               
               {/* Modal Close */}
               {checkoutStep !== 3 && (
