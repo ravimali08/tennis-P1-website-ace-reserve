@@ -2,7 +2,6 @@ import { useState, useEffect } from 'react';
 import { Trophy, Calendar, Search, ShieldCheck, X, CreditCard, Award, QrCode, CheckCircle, Printer, ScanLine, ArrowLeftRight, HelpCircle, Users, Activity, Landmark } from 'lucide-react';
 
 interface Tournament {
-  id: number;
   title: string;
   date: string;
   category: "Junior" | "Adult";
@@ -62,9 +61,8 @@ export default function Tournaments() {
   const [errors, setErrors] = useState<string[]>([]);
   const [ticketId, setTicketId] = useState("");
 
-  const [tournaments, setTournaments] = useState<Tournament[]>([
+  const tournaments: Tournament[] = [
     { 
-      id: 1,
       title: "Junior Agility Cup", 
       date: "2026-05-02", 
       category: "Junior", 
@@ -74,7 +72,6 @@ export default function Tournaments() {
       description: "Concluded fitness and footwork showcase event. Junior academy players evaluated baseline acceleration and court agility drill scores." 
     },
     { 
-      id: 2,
       title: "Summer Junior Rallies", 
       date: "2026-06-06", 
       category: "Junior", 
@@ -84,7 +81,6 @@ export default function Tournaments() {
       description: "Live junior rally challenges in progress. Matches are currently active across multiple under-16 age brackets." 
     },
     { 
-      id: 3,
       title: "Adult Open Challenger", 
       date: "2026-08-23", 
       category: "Adult", 
@@ -95,7 +91,6 @@ export default function Tournaments() {
       description: "A friendly but competitive adult tournament with singles and doubles brackets. Perfect for league players looking for tournament experience." 
     },
     { 
-      id: 4,
       title: "Spring Warm-Up Classic", 
       date: "2026-04-04", 
       category: "Adult", 
@@ -105,7 +100,6 @@ export default function Tournaments() {
       description: "Concluded season-opening social tournament for adult members. Focus on warm-up rallies and friendly match play." 
     },
     { 
-      id: 5,
       title: "Miami USTA Junior Championship", 
       date: "2026-08-09", 
       category: "Junior", 
@@ -116,18 +110,15 @@ export default function Tournaments() {
       description: "A USTA-sanctioned junior tournament featuring singles and doubles draws across multiple age divisions. Excellent match play." 
     },
     { 
-      id: 6,
       title: "Elite Junior Showcase", 
       date: "2026-08-16", 
       category: "Junior", 
       fee: "$60", 
       image: "/images/event-elite-junior.png",
       status: "Upcoming",
-      spotsLeft: 20,
       description: "Competitive junior tournament for advanced young players ready for serious match play, intense rallies, and ranking points." 
     },
     { 
-      id: 7,
       title: "Adult Hardcourt Doubles Cup", 
       date: "2026-09-27", 
       category: "Adult", 
@@ -138,24 +129,15 @@ export default function Tournaments() {
       description: "Double up for our premier adult outdoor hardcourt doubles draw. Open to all ratings with post-tournament buffet." 
     },
     { 
-      id: 8,
       title: "Vanguard Senior Open", 
       date: "2026-10-04", 
       category: "Adult", 
       fee: "Free", 
       image: "/images/event-senior-open.png",
       status: "Upcoming",
-      spotsLeft: 16,
       description: "A competitive singles and doubles bracket for mature players aged 45 and over. Red clay tournament draws." 
     }
-  ]);
-
-  useEffect(() => {
-    fetch("/api/tournaments")
-      .then(res => res.json())
-      .then(data => setTournaments(data))
-      .catch(err => console.error("Error fetching tournaments:", err));
-  }, [step]);
+  ];
 
   const formatDate = (dateStr: string) => {
     const [year, month, day] = dateStr.split('-');
@@ -210,43 +192,11 @@ export default function Tournaments() {
         setPaymentProgress((prev) => {
           if (prev >= 100) {
             clearInterval(interval);
-            
-            // Call API to save registration
-            const selectedTournament = tournaments[registeringIndex!];
-            const registrationPayload = {
-              tournamentId: selectedTournament.id,
-              name: formName,
-              email: formEmail,
-              phone: formPhone,
-              age: formAge,
-              rating: formRating,
-              paymentMethod: paymentMethod
-            };
-
-            fetch('/api/tournaments/register', {
-              method: 'POST',
-              headers: { 'Content-Type': 'application/json' },
-              body: JSON.stringify(registrationPayload)
-            })
-              .then(res => res.json())
-              .then(data => {
-                if (data.error) {
-                  setErrors([data.error]);
-                  setPaymentStatus('idle');
-                } else {
-                  setTicketId(data.registrationId);
-                  setPaymentStatus('success');
-                  setTimeout(() => {
-                    setStep(3);
-                  }, 800);
-                }
-              })
-              .catch(err => {
-                console.error("Registration error:", err);
-                setErrors(["Network error. Please try again."]);
-                setPaymentStatus('idle');
-              });
-
+            setPaymentStatus('success');
+            setTimeout(() => {
+              setTicketId(generatePassId());
+              setStep(3);
+            }, 800);
             return 100;
           }
           return prev + 20;

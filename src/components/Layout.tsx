@@ -24,6 +24,7 @@ export default function Layout() {
     { name: 'Blog', path: '/blog' },
     { name: 'Gallery', path: '/gallery' },
     { name: 'Contact', path: '/contact' },
+    { name: 'Book Court', path: '/book-court' },
   ];
 
   return (

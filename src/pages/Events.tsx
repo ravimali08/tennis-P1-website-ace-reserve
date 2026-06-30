@@ -34,7 +34,7 @@ export default function Events() {
   const [progressPercentage, setProgressPercentage] = useState(0);
   const [ticketId, setTicketId] = useState("");
 
-  const [events, setEvents] = useState<ClubEvent[]>([
+  const events: ClubEvent[] = [
     {
       id: 1,
       title: "Summer Members' Mixer",
@@ -113,14 +113,7 @@ export default function Events() {
       targetAudience: "Adults",
       ageGroup: "18+ Years"
     }
-  ]);
-
-  useEffect(() => {
-    fetch("/api/events")
-      .then(res => res.json())
-      .then(data => setEvents(data))
-      .catch(err => console.error("Error fetching events:", err));
-  }, [checkoutStep]);
+  ];
 
   const handleOpenGetTicket = (event: ClubEvent) => {
     setSelectedEvent(event);
@@ -143,37 +136,9 @@ export default function Events() {
         setProgressPercentage((prev) => {
           if (prev >= 100) {
             clearInterval(interval);
-            
-            // Call API to save ticket
-            const ticketPayload = {
-              eventId: selectedEvent?.id,
-              name: userName,
-              email: userEmail,
-              phone: userPhone,
-              paymentMethod: paymentMethod
-            };
-
-            fetch('/api/events/ticket', {
-              method: 'POST',
-              headers: { 'Content-Type': 'application/json' },
-              body: JSON.stringify(ticketPayload)
-            })
-              .then(res => res.json())
-              .then(data => {
-                setIsProcessing(false);
-                if (data.error) {
-                  alert(data.error);
-                } else {
-                  setTicketId(data.ticketId);
-                  setCheckoutStep(3);
-                }
-              })
-              .catch(err => {
-                console.error("Ticket booking error:", err);
-                alert("Network error. Please try again.");
-                setIsProcessing(false);
-              });
-
+            setIsProcessing(false);
+            setTicketId(`AR-EVT-${Math.floor(100000 + Math.random() * 900000)}`);
+            setCheckoutStep(3);
             return 100;
           }
           return prev + 10;
@@ -208,33 +173,9 @@ export default function Events() {
     }
 
     if (selectedEvent.price === "Free") {
-      // Free event: Skip payment step and call API directly
-      const ticketPayload = {
-        eventId: selectedEvent.id,
-        name: userName,
-        email: userEmail,
-        phone: userPhone,
-        paymentMethod: 'free'
-      };
-
-      fetch('/api/events/ticket', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(ticketPayload)
-      })
-        .then(res => res.json())
-        .then(data => {
-          if (data.error) {
-            alert(data.error);
-          } else {
-            setTicketId(data.ticketId);
-            setCheckoutStep(3);
-          }
-        })
-        .catch(err => {
-          console.error("Ticket booking error:", err);
-          alert("Network error. Please try again.");
-        });
+      // Free event: Skip payment step and go straight to Step 3
+      setTicketId(`AR-EVT-${Math.floor(100000 + Math.random() * 900000)}`);
+      setCheckoutStep(3);
     } else {
       // Paid event: Go to Payment step
       setCheckoutStep(2);

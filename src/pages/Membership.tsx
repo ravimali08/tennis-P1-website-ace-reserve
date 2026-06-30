@@ -156,37 +156,9 @@ export default function Membership() {
         setProgressPercentage((prev) => {
           if (prev >= 100) {
             clearInterval(interval);
-            
-            // Post payload to backend
-            const subscribePayload = {
-              planName: checkoutPlan?.name,
-              name: userName,
-              email: userEmail,
-              phone: userPhone,
-              paymentMethod: paymentMethod
-            };
-
-            fetch('/api/membership/subscribe', {
-              method: 'POST',
-              headers: { 'Content-Type': 'application/json' },
-              body: JSON.stringify(subscribePayload)
-            })
-              .then(res => res.json())
-              .then(data => {
-                setIsProcessing(false);
-                if (data.error) {
-                  alert(data.error);
-                } else {
-                  setMemberId(data.subscriptionId);
-                  setCheckoutStep(3);
-                }
-              })
-              .catch(err => {
-                console.error("Subscription error:", err);
-                alert("Network error. Please try again.");
-                setIsProcessing(false);
-              });
-
+            setIsProcessing(false);
+            setMemberId(`AR-MEM-${Math.floor(100000 + Math.random() * 900000)}`);
+            setCheckoutStep(3);
             return 100;
           }
           return prev + 10;

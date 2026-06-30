@@ -115,24 +115,6 @@ export default function BookCourt() {
   const pricePerHour = 30;
   const totalPrice = durationHours * pricePerHour;
 
-  const [apiBookings, setApiBookings] = useState<any[]>([]);
-
-  useEffect(() => {
-    fetch("/api/bookings")
-      .then(res => res.json())
-      .then(data => setApiBookings(data))
-      .catch(err => console.error("Error fetching bookings:", err));
-  }, [selectedDate, isSuccessOpen]);
-
-  const dynamicTimeSlots = timeSlots.map(slot => ({
-    ...slot,
-    isBooked: slot.isBooked || apiBookings.some(b => 
-      b.courtId === selectedCourtId && 
-      b.date === selectedDate && 
-      b.timeSlot === slot.label
-    )
-  }));
-
   // Checkout process simulation
   useEffect(() => {
     let interval: any;
@@ -141,44 +123,13 @@ export default function BookCourt() {
         setPaymentProgress((prev) => {
           if (prev >= 100) {
             clearInterval(interval);
-            
-            // Send booking payload to API
-            const bookingPayload = {
-              courtId: selectedCourtId,
-              date: selectedDate,
-              timeSlot: selectedTime,
-              userName: name,
-              userEmail: email,
-              durationHours: durationHours,
-              price: totalPrice,
-              paymentMethod: paymentMethod
-            };
-
-            fetch('/api/bookings', {
-              method: 'POST',
-              headers: { 'Content-Type': 'application/json' },
-              body: JSON.stringify(bookingPayload)
-            })
-              .then(res => res.json())
-              .then(data => {
-                if (data.error) {
-                  setPaymentErrors([data.error]);
-                  setPaymentStatus('idle');
-                } else {
-                  setBookingId(data.bookingId);
-                  setPaymentStatus('success');
-                  setTimeout(() => {
-                    setIsCheckoutOpen(false);
-                    setIsSuccessOpen(true);
-                  }, 800);
-                }
-              })
-              .catch(err => {
-                console.error("Booking error:", err);
-                setPaymentErrors(["Network error. Please try again."]);
-                setPaymentStatus('idle');
-              });
-
+            setPaymentStatus('success');
+            setTimeout(() => {
+              const randId = `AR-BKG-${Math.floor(100000 + Math.random() * 900000)}`;
+              setBookingId(randId);
+              setIsCheckoutOpen(false);
+              setIsSuccessOpen(true);
+            }, 800);
             return 100;
           }
           return prev + 20;
@@ -394,7 +345,7 @@ export default function BookCourt() {
               <div>
                 <label className="block text-xs font-extrabold text-gray-500 uppercase tracking-widest mb-3">Available Hourly Slots *</label>
                 <div className="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-6 gap-3">
-                  {dynamicTimeSlots.map((slot) => {
+                  {timeSlots.map((slot) => {
                     const isSelected = selectedTime === slot.label;
                     return (
                       <button
@@ -459,8 +410,8 @@ export default function BookCourt() {
                     type="tel"
                     required
                     value={phone}
-                    onChange={(e) => setPhone(e.target.value.replace(/\D/g, '').slice(0, 10))}
-                    placeholder="10-digit number"
+                    onChange={(e) => setPhone(e.target.value)}
+                    placeholder="e.g. +1 (305) 555-0100"
                     className="w-full px-4 py-3 rounded-xl border border-gray-200 focus:outline-none focus:border-blue-600 text-sm bg-white"
                   />
                 </div>
@@ -695,12 +646,14 @@ export default function BookCourt() {
                           maxLength={19}
                           value={cardNumber}
                           onChange={(e) => {
-                            const val = e.target.value.replace(/\D/g, '').slice(0, 16);
+                            const v = e.target.value.replace(/\s+/g, '').replace(/[^0-9]/gi, '');
+                            const matches = v.match(/\d{4,16}/g);
+                            const match = (matches && matches[0]) || '';
                             const parts = [];
-                            for (let i = 0; i < val.length; i += 4) {
-                              parts.push(val.substring(i, i + 4));
+                            for (let i=0, len=match.length; i<len; i+=4) {
+                              parts.push(match.substring(i, i+4));
                             }
-                            setCardNumber(parts.join(' '));
+                            setCardNumber(parts.length > 0 ? parts.join(' ') : v);
                           }}
                           onFocus={() => setIsCardFlipped(false)}
                           placeholder="1234 5678 1234 5678"
@@ -722,7 +675,7 @@ export default function BookCourt() {
                             if (v.length > 2) {
                               v = v.substring(0,2) + '/' + v.substring(2,4);
                             }
-                            setCardExpiry(v.slice(0, 5));
+                            setCardExpiry(v);
                           }}
                           onFocus={() => setIsCardFlipped(false)}
                           placeholder="MM/YY"
@@ -736,7 +689,7 @@ export default function BookCourt() {
                           required
                           maxLength={3}
                           value={cardCvc}
-                          onChange={(e) => setCardCvc(e.target.value.replace(/\D/g, '').slice(0, 3))}
+                          onChange={(e) => setCardCvc(e.target.value.replace(/[^0-9]/g, ''))}
                           onFocus={() => setIsCardFlipped(true)}
                           placeholder="•••"
                           className="w-full px-4 py-3 rounded-xl border border-gray-250 focus:outline-none focus:border-blue-600 text-sm text-center bg-white"

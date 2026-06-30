@@ -30,37 +30,15 @@ export default function Contact() {
     }
 
     setIsSubmitting(true);
-
-    const contactPayload = {
-      name: name,
-      email: email,
-      subject: type,
-      message: message
-    };
-
-    fetch('/api/contact', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(contactPayload)
-    })
-      .then(res => res.json())
-      .then(data => {
-        setIsSubmitting(false);
-        if (data.error) {
-          alert(data.error);
-        } else {
-          setIsSuccess(true);
-          setName("");
-          setEmail("");
-          setType("General Inquiry");
-          setMessage("");
-        }
-      })
-      .catch(err => {
-        console.error("Contact submit error:", err);
-        alert("Network error. Please try again.");
-        setIsSubmitting(false);
-      });
+    // Simulate API request
+    setTimeout(() => {
+      setIsSubmitting(false);
+      setIsSuccess(true);
+      setName("");
+      setEmail("");
+      setType("General Inquiry");
+      setMessage("");
+    }, 1500);
   };
 
   return (
