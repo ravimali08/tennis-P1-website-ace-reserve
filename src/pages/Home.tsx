@@ -9,7 +9,7 @@ export default function Home() {
       title: "Junior Academy",
       audience: "Ages 5-12",
       price: "$189 / month",
-      image: "/images/kids program.png",
+      image: "/images/kids program.jpg",
       description: "Building technical fundamentals, coordination, and athletic passion for young juniors.",
       schedule: [
         "Mon & Wed: 4:00 PM - 5:00 PM",
@@ -20,7 +20,7 @@ export default function Home() {
       title: "Teenagers Development",
       audience: "Ages 13-18",
       price: "$229 / month",
-      image: "/images/teenage program.png",
+      image: "/images/teenage program.jpg",
       description: "Designed for intermediate teenagers seeking competitive USTA/UTR match development.",
       schedule: [
         "Tue & Thu: 4:30 PM - 6:00 PM",
@@ -31,7 +31,7 @@ export default function Home() {
       title: "Adult Mastery",
       audience: "Ages 18+",
       price: "$169 / month",
-      image: "/images/adult program.png",
+      image: "/images/adult program.jpg",
       description: "High-energy drills, stroke analysis, and doubles strategy clinics tailored for adult league play.",
       schedule: [
         "Morning: Tue & Thu 7:00 AM",
@@ -42,7 +42,7 @@ export default function Home() {
       title: "Elite Performance",
       audience: "Advanced Players",
       price: "$549 / month",
-      image: "/images/elite program.png",
+      image: "/images/elite program.jpg",
       description: "Intense fitness conditioning, match play strategy analysis, and tournament preparation.",
       schedule: [
         "Mon - Fri: 2:00 PM - 6:00 PM",
@@ -350,7 +350,7 @@ export default function Home() {
               <div>
                 <div className="aspect-[16/10] overflow-hidden bg-gray-200">
                   <img 
-                    src="/images/C3.png" 
+                    src="/images/C3.jpg" 
                     alt="Red Clay Court" 
                     className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" 
                   />
@@ -378,7 +378,7 @@ export default function Home() {
               <div>
                 <div className="aspect-[16/10] overflow-hidden bg-gray-200">
                   <img 
-                    src="/images/C1.png" 
+                    src="/images/C1.jpg" 
                     alt="Indoor Hard Court" 
                     className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" 
                   />
@@ -406,7 +406,7 @@ export default function Home() {
               <div>
                 <div className="aspect-[16/10] overflow-hidden bg-gray-200">
                   <img 
-                    src="/images/C5.png" 
+                    src="/images/C5.jpg" 
                     alt="Exhibition Grass Court" 
                     className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" 
                   />

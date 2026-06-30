@@ -49,42 +49,42 @@ export default function BookCourt() {
       id: 1,
       name: "Court 1",
       type: "Hard Court",
-      image: "/images/C1.png",
+      image: "/images/C1.jpg",
       description: "Premier cushioned indoor hard court. Provides consistent ball bounce and speed, ideal for quick rallies."
     },
     {
       id: 2,
       name: "Court 2",
       type: "Hard Court",
-      image: "/images/C2.png",
+      image: "/images/C2.jpg",
       description: "Outdoor championship hard court. Excellent lighting for night sessions, designed for competitive training."
     },
     {
       id: 3,
       name: "Court 3",
       type: "Clay Court",
-      image: "/images/C3.png",
+      image: "/images/C3.jpg",
       description: "Authentic red clay court. Slow ball speed and high spin bounce, soft on players' knees."
     },
     {
       id: 4,
       name: "Court 4",
       type: "Clay Court",
-      image: "/images/C4.png",
+      image: "/images/C4.jpg",
       description: "Outdoor green Har-Tru clay court. Premium playing conditions with superior drainage for all-weather play."
     },
     {
       id: 5,
       name: "Court 5",
       type: "Grass Court",
-      image: "/images/C5.png",
+      image: "/images/C5.jpg",
       description: "Traditional grass court. Very fast pace and low slice bounce, providing a classic lawn tennis experience."
     },
     {
       id: 6,
       name: "Court 6",
       type: "Grass Court",
-      image: "/images/C6.png",
+      image: "/images/C6.jpg",
       description: "Exhibition grass court. Impeccably manicured lawn, reserved for competitive matches and academy members."
     }
   ];

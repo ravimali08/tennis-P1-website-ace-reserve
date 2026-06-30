@@ -22,7 +22,7 @@ export default function Coaching() {
       id: 1,
       title: "Kids Coaching Program",
       price: "$189 / month",
-      image: "/images/kids program.png",
+      image: "/images/kids program.jpg",
       schedule: [
         "Monday & Wednesday: 4:00 PM - 5:00 PM",
         "Saturday: 9:00 AM - 10:30 AM"
@@ -45,7 +45,7 @@ export default function Coaching() {
       id: 2,
       title: "Teenager Program",
       price: "$229 / month",
-      image: "/images/teenage program.png",
+      image: "/images/teenage program.jpg",
       schedule: [
         "Tuesday & Thursday: 4:30 PM - 6:00 PM",
         "Saturday Match Play: 2:00 PM - 4:00 PM"
@@ -68,7 +68,7 @@ export default function Coaching() {
       id: 3,
       title: "Adult Program",
       price: "$169 / month",
-      image: "/images/adult program.png",
+      image: "/images/adult program.jpg",
       schedule: [
         "Morning: Tue & Thu 7:00 AM - 8:30 AM",
         "Evening: Mon & Wed 7:00 PM - 8:30 PM",
@@ -92,7 +92,7 @@ export default function Coaching() {
       id: 4,
       title: "Elite Program",
       price: "$549 / month",
-      image: "/images/elite program.png",
+      image: "/images/elite program.jpg",
       schedule: [
         "Monday - Friday: 2:00 PM - 6:00 PM",
         "Saturday: 8:00 AM - 12:00 PM"
