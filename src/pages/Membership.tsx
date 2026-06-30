@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { Check, Star, HelpCircle, ChevronDown, ChevronUp, ShieldCheck, Printer, ArrowLeft, CreditCard, Smartphone, CheckCircle, Shield, Award, Sparkles, User, Mail, Phone, Calendar } from 'lucide-react';
+import { Check, Star, HelpCircle, ChevronDown, ChevronUp, ShieldCheck, Printer, ArrowLeft, CreditCard, Smartphone, CheckCircle, Shield, Award, Sparkles, User, Mail, Phone, Calendar, Download } from 'lucide-react';
 
 interface Plan {
   name: string;
@@ -422,8 +422,6 @@ export default function Membership() {
       `}</style>
 
       <div className="container mx-auto px-6 md:px-12 no-print">
-        {checkoutPlan === null ? (
-          <>
         {/* Header */}
         <div className="text-center max-w-3xl mx-auto mb-16">
           <h1 className="text-4xl md:text-5xl font-black text-gray-900 tracking-tight mb-6">Choose Your Membership</h1>
@@ -562,9 +560,12 @@ export default function Membership() {
             ))}
           </div>
         </div>
-          </>
-        ) : (
-          <div className="bg-white rounded-[2.5rem] w-full max-w-2xl border border-gray-150 shadow-2xl relative my-8 mx-auto">
+      </div>
+
+      {/* CHECKOUT PORTAL MODAL OVERLAY */}
+      {checkoutPlan && (
+        <div className="fixed inset-0 bg-black/60 backdrop-blur-sm z-50 flex items-center justify-center p-4 overflow-y-auto no-print">
+          <div className="bg-white rounded-[2.5rem] w-full max-w-2xl max-h-[90vh] overflow-y-auto border border-gray-150 shadow-2xl relative my-8">
             
             {/* Modal Close */}
             {checkoutStep !== 3 && (
@@ -900,8 +901,8 @@ export default function Membership() {
             {checkoutStep === 3 && (
               <div className="p-8 text-center space-y-8">
                 <div className="no-print">
-                  <div className="w-12 h-12 rounded-full bg-green-50 border border-green-200 flex items-center justify-center mx-auto mb-3">
-                    <CheckCircle className="w-7 h-7 text-green-600" />
+                  <div className="w-12 h-12 rounded-full bg-blue-50 border border-blue-200 flex items-center justify-center mx-auto mb-3">
+                    <CheckCircle className="w-7 h-7 text-blue-600" />
                   </div>
                   <h4 className="text-2xl font-black text-gray-900 mb-1">Registration Complete!</h4>
                   <p className="text-gray-500 text-xs">
@@ -980,9 +981,9 @@ export default function Membership() {
                 <div className="flex gap-4 justify-center pt-4 border-t border-gray-150 no-print">
                   <button
                     onClick={handleDownloadPng}
-                    className="bg-gray-100 hover:bg-gray-200 text-gray-700 px-6 py-3 rounded-full font-bold text-sm transition-all border border-gray-200 flex items-center gap-2"
+                    className="bg-blue-600 hover:bg-blue-700 text-white px-8 py-3 rounded-full font-bold text-sm transition-all shadow-md shadow-blue-600/10 flex items-center gap-2"
                   >
-                    <Printer className="w-4 h-4" /> Download Card (PNG)
+                    <Download className="w-4 h-4" /> Download Card (PNG)
                   </button>
                   <button
                     onClick={closeCheckout}
@@ -995,8 +996,8 @@ export default function Membership() {
             )}
 
           </div>
-        )}
-      </div>
+        </div>
+      )}
 
     </div>
   );

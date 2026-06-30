@@ -365,9 +365,7 @@ export default function BookCourt() {
       `}</style>
 
       <div className="container mx-auto px-6 md:px-12">
-        {!isCheckoutOpen && !isSuccessOpen ? (
-          <>
-            {/* Header Cover Banner */}
+        {/* Header Cover Banner */}
         <div className="relative rounded-[3rem] overflow-hidden p-8 md:p-16 text-white mb-16 shadow-xl">
           <div className="absolute inset-0 z-0">
             <img src="/images/indoor-court.jpg" alt="Courts" className="w-full h-full object-cover" />
@@ -616,9 +614,12 @@ export default function BookCourt() {
           </div>
 
         </div>
-          </>
-        ) : isCheckoutOpen ? (
-          <div className="bg-white rounded-[2.5rem] w-full max-w-lg border border-gray-100 shadow-2xl relative animate-fade-in my-8 mx-auto">
+      </div>
+
+      {/* Checkout Screen Modal */}
+      {isCheckoutOpen && (
+        <div className="fixed inset-0 bg-black/60 backdrop-blur-sm z-50 flex items-center justify-center p-4">
+          <div className="bg-white rounded-[2.5rem] w-full max-w-lg max-h-[90vh] overflow-y-auto border border-gray-100 shadow-2xl relative animate-fade-in my-8">
             {/* Modal Header */}
             <div className="bg-blue-950 text-white px-8 py-6 flex justify-between items-center relative">
               <div>
@@ -882,8 +883,13 @@ export default function BookCourt() {
               )}
             </div>
           </div>
-        ) : (
-          <div className="bg-white rounded-[2.5rem] w-full max-w-lg border border-gray-100 shadow-2xl relative animate-fade-in my-8 mx-auto">
+        </div>
+      )}
+
+      {/* Success Booking Confirmation Modal */}
+      {isSuccessOpen && (
+        <div className="fixed inset-0 bg-black/60 backdrop-blur-sm z-50 flex items-center justify-center p-4">
+          <div className="bg-white rounded-[2.5rem] w-full max-w-lg max-h-[90vh] overflow-y-auto border border-gray-100 shadow-2xl relative animate-fade-in my-8">
             <div className="p-8 text-center space-y-6">
               
                <div className="w-16 h-16 rounded-full bg-blue-50 border border-blue-200 flex items-center justify-center mx-auto no-print">
@@ -971,8 +977,9 @@ export default function BookCourt() {
 
             </div>
           </div>
-        )}
-      </div>
+        </div>
+      )}
+
     </div>
   );
 }

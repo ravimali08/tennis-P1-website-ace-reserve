@@ -540,10 +540,9 @@ export default function Coaching() {
   return (
     <div className="pt-24 pb-20 bg-white min-h-screen">
       <div className="container mx-auto px-6 md:px-12">
-        {checkoutProgramId === null || !checkoutProgram ? (
-          <>
-            {/* Rebuilt Cover Hero Section with Loop Background Video */}
-            <div className="relative rounded-[3rem] overflow-hidden p-8 md:p-20 text-white mb-16 shadow-2xl border border-white/10">
+        
+        {/* Rebuilt Cover Hero Section with Loop Background Video */}
+        <div className="relative rounded-[3rem] overflow-hidden p-8 md:p-20 text-white mb-16 shadow-2xl border border-white/10">
           <div className="absolute inset-0 z-0">
             {/* Loop Autoplaying HTML5 Video */}
             <video 
@@ -844,9 +843,11 @@ export default function Coaching() {
             })}
           </div>
         </div>
-          </>
-        ) : (
-          <div className={`bg-white rounded-[2.5rem] w-full ${checkoutStep === 3 ? 'max-w-xl' : 'max-w-2xl'} border border-gray-150 shadow-2xl relative my-8 text-left mx-auto`}>
+
+        {/* Registration/Checkout Modal */}
+        {checkoutProgramId !== null && checkoutProgram && (
+          <div className="fixed inset-0 bg-black/60 backdrop-blur-sm z-50 flex items-center justify-center p-4 overflow-y-auto">
+            <div className={`bg-white rounded-[2.5rem] w-full ${checkoutStep === 3 ? 'max-w-xl' : 'max-w-2xl'} max-h-[90vh] overflow-y-auto border border-gray-150 shadow-2xl relative my-8 text-left`}>
               
               {/* Steps Header (Only shown for Step 1 & 2) */}
               {checkoutStep < 3 && (
@@ -1276,7 +1277,8 @@ export default function Coaching() {
               )}
 
             </div>
-          )}
+          </div>
+        )}
       </div>
     </div>
   );
