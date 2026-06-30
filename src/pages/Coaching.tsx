@@ -900,7 +900,7 @@ export default function Coaching() {
                     </div>
                   )}
 
-                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                  <div className="space-y-4">
                     <div>
                       <label className="block text-xs font-bold text-gray-400 uppercase tracking-wider mb-2">Full Name</label>
                       <input 
@@ -923,9 +923,6 @@ export default function Coaching() {
                         className="w-full px-4 py-3 rounded-xl border border-gray-200 focus:outline-none focus:border-blue-600 text-sm bg-white font-medium"
                       />
                     </div>
-                  </div>
-
-                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                     <div>
                       <label className="block text-xs font-bold text-gray-400 uppercase tracking-wider mb-2">Phone Number</label>
                       <input 
@@ -1087,32 +1084,30 @@ export default function Coaching() {
                               />
                             </div>
 
-                            <div className="grid grid-cols-2 gap-4">
-                              <div>
-                                <label className="block text-xs font-bold text-gray-400 uppercase tracking-wider mb-2">Expiration Date</label>
-                                <input
-                                  type="text"
-                                  required
-                                  value={cardExpiry}
-                                  onChange={handleExpiryChange}
-                                  placeholder="MM/YY"
-                                  className="w-full px-4 py-3 rounded-xl border border-gray-200 focus:outline-none focus:border-blue-600 text-sm bg-white font-mono"
-                                />
-                              </div>
-                              <div>
-                                <label className="block text-xs font-bold text-gray-400 uppercase tracking-wider mb-2">Security Code (CVC)</label>
-                                <input
-                                  type="password"
-                                  required
-                                  maxLength={3}
-                                  value={cardCvc}
-                                  onFocus={() => setIsCardFlipped(true)}
-                                  onBlur={() => setIsCardFlipped(false)}
-                                  onChange={(e) => setCardCvc(e.target.value.replace(/\D/g, '').substring(0, 3))}
-                                  placeholder="123"
-                                  className="w-full px-4 py-3 rounded-xl border border-gray-200 focus:outline-none focus:border-blue-600 text-sm bg-white font-mono"
-                                />
-                              </div>
+                            <div>
+                              <label className="block text-xs font-bold text-gray-400 uppercase tracking-wider mb-2">Expiration Date</label>
+                              <input
+                                type="text"
+                                required
+                                value={cardExpiry}
+                                onChange={handleExpiryChange}
+                                placeholder="MM/YY"
+                                className="w-full px-4 py-3 rounded-xl border border-gray-200 focus:outline-none focus:border-blue-600 text-sm bg-white font-mono"
+                              />
+                            </div>
+                            <div>
+                              <label className="block text-xs font-bold text-gray-400 uppercase tracking-wider mb-2">Security Code (CVC)</label>
+                              <input
+                                type="password"
+                                required
+                                maxLength={3}
+                                value={cardCvc}
+                                onFocus={() => setIsCardFlipped(true)}
+                                onBlur={() => setIsCardFlipped(false)}
+                                onChange={(e) => setCardCvc(e.target.value.replace(/\D/g, '').substring(0, 3))}
+                                placeholder="123"
+                                className="w-full px-4 py-3 rounded-xl border border-gray-200 focus:outline-none focus:border-blue-600 text-sm bg-white font-mono"
+                              />
                             </div>
                           </div>
 
