@@ -344,7 +344,7 @@ export default function Home() {
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             {/* Clay Court Card */}
             <div 
-              onClick={() => window.location.href = '/book'}
+              onClick={() => window.location.href = '/book-court'}
               className="group cursor-pointer bg-gray-50 rounded-[2rem] border border-gray-150 overflow-hidden shadow-sm hover:shadow-lg transition-all duration-300 hover:-translate-y-1 text-left flex flex-col justify-between"
             >
               <div>
@@ -372,7 +372,7 @@ export default function Home() {
 
             {/* Hard Court Card */}
             <div 
-              onClick={() => window.location.href = '/book'}
+              onClick={() => window.location.href = '/book-court'}
               className="group cursor-pointer bg-gray-50 rounded-[2rem] border border-gray-150 overflow-hidden shadow-sm hover:shadow-lg transition-all duration-300 hover:-translate-y-1 text-left flex flex-col justify-between"
             >
               <div>
@@ -400,7 +400,7 @@ export default function Home() {
 
             {/* Grass Court Card */}
             <div 
-              onClick={() => window.location.href = '/book'}
+              onClick={() => window.location.href = '/book-court'}
               className="group cursor-pointer bg-gray-50 rounded-[2rem] border border-gray-150 overflow-hidden shadow-sm hover:shadow-lg transition-all duration-300 hover:-translate-y-1 text-left flex flex-col justify-between"
             >
               <div>
