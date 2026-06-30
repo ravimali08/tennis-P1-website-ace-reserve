@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { Check, Star, HelpCircle, ChevronDown, ChevronUp, ShieldCheck, Printer, ArrowLeft, CreditCard, Smartphone, CheckCircle, Shield, Award, Sparkles, User, Mail, Phone, Calendar, Download } from 'lucide-react';
+import { Check, Star, HelpCircle, ChevronDown, ChevronUp, ShieldCheck, ArrowLeft, CreditCard, Smartphone, CheckCircle, Shield, Award, User, Mail, Phone, Download } from 'lucide-react';
 
 interface Plan {
   name: string;
@@ -150,7 +150,7 @@ export default function Membership() {
 
   // Payment Sim Timer
   useEffect(() => {
-    let interval: any;
+    let interval: ReturnType<typeof setInterval> | undefined;
     if (isProcessing) {
       interval = setInterval(() => {
         setProgressPercentage((prev) => {
@@ -233,9 +233,6 @@ export default function Membership() {
     setProgressPercentage(0);
   };
 
-  const handlePrint = () => {
-    window.print();
-  };
 
   const closeCheckout = () => {
     setCheckoutPlan(null);

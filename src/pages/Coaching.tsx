@@ -1,5 +1,5 @@
-import { useState, useEffect } from 'react';
-import { Calendar, Clock, DollarSign, BookOpen, Award, CheckCircle, X, ChevronRight, ChevronDown, HelpCircle, Shield, ShieldCheck, CreditCard, Printer, QrCode, ScanLine, ArrowLeft, CircleAlert, Activity } from 'lucide-react';
+import { useState } from 'react';
+import { Clock, Award, CheckCircle, X, ChevronRight, HelpCircle, ShieldCheck, CreditCard, QrCode, ArrowLeft, CircleAlert, Activity, Download } from 'lucide-react';
 
 interface Program {
   id: number;
@@ -10,6 +10,12 @@ interface Program {
   focus: string;
   includes: string[];
   curriculum: string[];
+}
+
+function generateRandomEnrollmentId(): string {
+  const randomNum = Math.floor(1000 + Math.random() * 9000);
+  const randomNum2 = Math.floor(1000 + Math.random() * 9000);
+  return `AC-${randomNum}-${randomNum2}`;
 }
 
 export default function Coaching() {
@@ -59,9 +65,7 @@ export default function Coaching() {
     setPaymentErrors([]);
     
     // Generate random Enrollment ID
-    const randomNum = Math.floor(1000 + Math.random() * 9000);
-    const randomNum2 = Math.floor(1000 + Math.random() * 9000);
-    setEnrollmentId(`AC-${randomNum}-${randomNum2}`);
+    setEnrollmentId(generateRandomEnrollmentId());
   };
 
   const handleCardNumberChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -1262,13 +1266,13 @@ export default function Coaching() {
                   <div className="flex gap-4 justify-center pt-4 border-t border-gray-150">
                     <button
                       onClick={handleDownloadPng}
-                      className="bg-gray-100 hover:bg-gray-200 text-gray-700 px-6 py-3 rounded-full font-bold text-sm transition-all border border-gray-200 flex items-center gap-2"
+                      className="bg-blue-600 hover:bg-blue-700 text-white px-8 py-3 rounded-full font-bold text-sm transition-all shadow-md shadow-blue-600/10 flex items-center gap-2"
                     >
-                      <Printer className="w-4 h-4" /> Download Pass (PNG)
+                      <Download className="w-4 h-4" /> Download Pass (PNG)
                     </button>
                     <button
                       onClick={closeCheckout}
-                      className="bg-blue-600 hover:bg-blue-700 text-white px-8 py-3 rounded-full font-bold text-sm transition-all shadow-lg shadow-blue-600/10"
+                      className="bg-gray-800 hover:bg-gray-900 text-white px-6 py-3 rounded-full font-bold text-sm transition-all shadow-md"
                     >
                       Finish & Close
                     </button>

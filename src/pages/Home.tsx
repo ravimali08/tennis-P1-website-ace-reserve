@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { ArrowRight, Trophy, Calendar, Users, ArrowLeft, Star, MessageSquare, ChevronDown, ChevronUp } from 'lucide-react';
+import { ArrowRight, Trophy, Calendar, Users, Star, ChevronDown, ChevronUp } from 'lucide-react';
 
 export default function Home() {
   const [activeFaq, setActiveFaq] = useState<number | null>(null);

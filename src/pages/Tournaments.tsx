@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { Trophy, Calendar, Search, ShieldCheck, X, CreditCard, Award, QrCode, CheckCircle, Printer, ScanLine, ArrowLeftRight, HelpCircle, Users, Activity, Landmark, Download } from 'lucide-react';
+import { Trophy, Calendar, Search, ShieldCheck, X, CreditCard, Award, QrCode, CheckCircle, Printer, ScanLine, ArrowLeftRight, Users, Activity, Landmark, Download } from 'lucide-react';
 
 interface Tournament {
   title: string;
@@ -186,7 +186,7 @@ export default function Tournaments() {
 
   // Payment loader simulation
   useEffect(() => {
-    let interval: any;
+    let interval: ReturnType<typeof setInterval> | undefined;
     if (paymentStatus === 'processing') {
       interval = setInterval(() => {
         setPaymentProgress((prev) => {
@@ -472,7 +472,7 @@ export default function Tournaments() {
                   {["All", "Junior", "Adult"].map((cat) => (
                     <button
                       key={cat}
-                      onClick={() => setSelectedCategory(cat as any)}
+                      onClick={() => setSelectedCategory(cat as "All" | "Junior" | "Adult")}
                       className={`px-5 py-2.5 rounded-full font-bold text-xs transition-all border uppercase tracking-wider ${
                         selectedCategory === cat
                           ? 'bg-blue-600 text-white border-blue-600 shadow-md'
@@ -491,7 +491,7 @@ export default function Tournaments() {
                 {["All", "Upcoming", "Ongoing", "Completed"].map((status) => (
                   <button
                     key={status}
-                    onClick={() => setSelectedStatus(status as any)}
+                    onClick={() => setSelectedStatus(status as "All" | "Upcoming" | "Ongoing" | "Completed")}
                     className={`px-5 py-2 rounded-full font-bold text-xs transition-all border ${
                       selectedStatus === status
                         ? 'bg-gray-900 text-white border-gray-905'

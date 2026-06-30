@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { Calendar as CalendarIcon, Clock, Users, ArrowRight, ShieldCheck, CreditCard, CheckCircle, Printer, MapPin, ChevronRight, Activity, CircleAlert, QrCode, ScanLine, ArrowLeftRight, X, Download } from 'lucide-react';
+import { ShieldCheck, CreditCard, CheckCircle, Printer, MapPin, Activity, CircleAlert, QrCode, ScanLine, ArrowLeftRight, X, Download } from 'lucide-react';
 
 interface Court {
   id: number;
@@ -117,7 +117,7 @@ export default function BookCourt() {
 
   // Checkout process simulation
   useEffect(() => {
-    let interval: any;
+    let interval: ReturnType<typeof setInterval> | undefined;
     if (paymentStatus === 'processing') {
       interval = setInterval(() => {
         setPaymentProgress((prev) => {

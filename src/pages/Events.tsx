@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { Calendar, Clock, DollarSign, Users, ArrowRight, X, Sparkles, CheckCircle, Printer, MessageSquare, CreditCard, Smartphone, ShieldCheck, User, Mail, Phone, Download } from 'lucide-react';
+import { Calendar, Clock, DollarSign, Users, ArrowRight, X, Sparkles, CheckCircle, CreditCard, Smartphone, User, Mail, Phone, Download } from 'lucide-react';
 
 interface ClubEvent {
   id: number;
@@ -130,7 +130,7 @@ export default function Events() {
 
   // Payment simulation logic
   useEffect(() => {
-    let interval: any;
+    let interval: ReturnType<typeof setInterval> | undefined;
     if (isProcessing) {
       interval = setInterval(() => {
         setProgressPercentage((prev) => {
