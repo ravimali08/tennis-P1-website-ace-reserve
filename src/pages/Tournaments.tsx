@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { Trophy, Calendar, Search, ShieldCheck, X, CreditCard, Award, QrCode, CheckCircle, Printer, ScanLine, ArrowLeftRight, HelpCircle, Users, Activity, Landmark } from 'lucide-react';
+import { Trophy, Calendar, Search, ShieldCheck, X, CreditCard, Award, QrCode, CheckCircle, Printer, ScanLine, ArrowLeftRight, HelpCircle, Users, Activity, Landmark, Download } from 'lucide-react';
 
 interface Tournament {
   title: string;
@@ -274,6 +274,115 @@ export default function Tournaments() {
 
   const handlePrint = () => {
     window.print();
+  };
+
+  const handleDownloadPng = () => {
+    if (registeringIndex === null) return;
+    const tournament = tournaments[registeringIndex];
+
+    const canvas = document.createElement("canvas");
+    canvas.width = 800;
+    canvas.height = 1200;
+    const ctx = canvas.getContext("2d");
+    if (!ctx) return;
+
+    // Clear background with subtle gradient
+    const gradient = ctx.createLinearGradient(0, 0, 0, 1200);
+    gradient.addColorStop(0, "#030712"); // dark gray/black
+    gradient.addColorStop(1, "#1e3a8a"); // navy blue
+    ctx.fillStyle = gradient;
+    ctx.fillRect(0, 0, 800, 1200);
+
+    // Accent line/top bar
+    ctx.fillStyle = "#2563eb"; // blue-600
+    ctx.fillRect(0, 0, 800, 30);
+
+    // Header banner text
+    ctx.fillStyle = "#60a5fa"; // blue-400
+    ctx.font = "bold 20px sans-serif";
+    ctx.textAlign = "center";
+    ctx.fillText("ACE RESERVE TENNIS CLUB", 400, 100);
+
+    ctx.fillStyle = "#ffffff";
+    ctx.font = "bold 36px sans-serif";
+    ctx.fillText("DIGITAL COMPETITIVE PASS", 400, 160);
+
+    // Subtle divider
+    ctx.strokeStyle = "rgba(255,255,255,0.1)";
+    ctx.lineWidth = 2;
+    ctx.beginPath();
+    ctx.moveTo(80, 220);
+    ctx.lineTo(720, 220);
+    ctx.stroke();
+
+    // Entry status label
+    ctx.fillStyle = "#10b981"; // emerald-500
+    ctx.font = "bold 22px sans-serif";
+    ctx.textAlign = "left";
+    ctx.fillText("STATUS: ENTRY CONFIRMED", 100, 280);
+
+    // Tournament title
+    ctx.fillStyle = "#ffffff";
+    ctx.font = "bold 36px sans-serif";
+    ctx.fillText(tournament.title, 100, 370);
+
+    // Tournament Details
+    ctx.fillStyle = "#9ca3af"; // gray-400
+    ctx.font = "normal 22px sans-serif";
+    ctx.fillText("Tournament Date", 100, 460);
+    ctx.fillStyle = "#ffffff";
+    ctx.font = "bold 26px sans-serif";
+    ctx.fillText(formatDate(tournament.date), 100, 500);
+
+    ctx.fillStyle = "#9ca3af";
+    ctx.font = "normal 22px sans-serif";
+    ctx.fillText("Player Name", 100, 580);
+    ctx.fillStyle = "#ffffff";
+    ctx.font = "bold 32px sans-serif";
+    ctx.fillText(formName, 100, 620);
+
+    ctx.fillStyle = "#9ca3af";
+    ctx.font = "normal 22px sans-serif";
+    ctx.fillText("Division / UTR", 100, 700);
+    ctx.fillStyle = "#ffffff";
+    ctx.font = "bold 26px sans-serif";
+    ctx.fillText(formRating || "Standard Draw", 100, 740);
+
+    ctx.fillStyle = "#9ca3af";
+    ctx.font = "normal 22px sans-serif";
+    ctx.fillText("Shirt Size", 450, 700);
+    ctx.fillStyle = "#ffffff";
+    ctx.font = "bold 26px sans-serif";
+    ctx.fillText(`Size ${formShirt}`, 450, 740);
+
+    // Pass ID / Barcode block
+    ctx.fillStyle = "#9ca3af";
+    ctx.font = "normal 22px sans-serif";
+    ctx.fillText("Competitor Pass ID", 100, 830);
+    ctx.fillStyle = "#3b82f6"; // blue-500
+    ctx.font = "bold 30px monospace";
+    ctx.fillText(ticketId, 100, 870);
+
+    // Draw nice barcode lines
+    ctx.fillStyle = "#ffffff";
+    let barcodeX = 100;
+    for (let i = 0; i < 48; i++) {
+      const width = i % 3 === 0 ? 8 : (i % 2 === 0 ? 4 : 2);
+      ctx.fillRect(barcodeX, 930, width, 100);
+      barcodeX += width + 4;
+    }
+
+    // Footnote text
+    ctx.fillStyle = "#6b7280";
+    ctx.font = "bold 18px sans-serif";
+    ctx.textAlign = "center";
+    ctx.fillText("PRESENT BARCODE FOR CHECK-IN AT DESK", 400, 1100);
+
+    // Trigger download
+    const link = document.createElement("a");
+    link.download = `${formName.replace(/\s+/g, "_")}_tournament_pass.png`;
+    link.href = canvas.toDataURL("image/png");
+    link.click();
   };
 
   return (
@@ -1023,14 +1132,20 @@ export default function Tournaments() {
                   {/* Actions */}
                   <div className="flex gap-4 justify-center">
                     <button
+                      onClick={handleDownloadPng}
+                      className="bg-blue-600 hover:bg-blue-700 text-white px-8 py-3 rounded-full font-bold text-sm transition-all shadow-md shadow-blue-600/10 flex items-center gap-2"
+                    >
+                      <Download className="w-4 h-4" /> Download Pass (PNG)
+                    </button>
+                    <button
                       onClick={handlePrint}
                       className="bg-gray-150 hover:bg-gray-200 text-gray-700 px-6 py-3 rounded-full font-bold text-sm transition-all flex items-center gap-2 border border-gray-200"
                     >
-                      <Printer className="w-4 h-4" /> Print Ticket Pass
+                      <Printer className="w-4 h-4" /> Print Pass
                     </button>
                     <button
                       onClick={() => setRegisteringIndex(null)}
-                      className="bg-blue-600 hover:bg-blue-700 text-white px-8 py-3 rounded-full font-bold text-sm transition-all shadow-md shadow-blue-600/10"
+                      className="bg-gray-800 hover:bg-gray-900 text-white px-6 py-3 rounded-full font-bold text-sm transition-all shadow-md"
                     >
                       Back to Listings
                     </button>

@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { Calendar as CalendarIcon, Clock, Users, ArrowRight, ShieldCheck, CreditCard, CheckCircle, Printer, MapPin, ChevronRight, Activity, CircleAlert, QrCode, ScanLine, ArrowLeftRight, X } from 'lucide-react';
+import { Calendar as CalendarIcon, Clock, Users, ArrowRight, ShieldCheck, CreditCard, CheckCircle, Printer, MapPin, ChevronRight, Activity, CircleAlert, QrCode, ScanLine, ArrowLeftRight, X, Download } from 'lucide-react';
 
 interface Court {
   id: number;
@@ -196,6 +196,132 @@ export default function BookCourt() {
 
   const handlePrint = () => {
     window.print();
+  };
+
+  const handleDownloadPng = () => {
+    const canvas = document.createElement("canvas");
+    canvas.width = 800;
+    canvas.height = 1200;
+    const ctx = canvas.getContext("2d");
+    if (!ctx) return;
+
+    // Clear background with subtle gradient
+    const gradient = ctx.createLinearGradient(0, 0, 0, 1200);
+    gradient.addColorStop(0, "#0b1329"); // deep midnight blue
+    gradient.addColorStop(1, "#1d3557"); // dark slate blue
+    ctx.fillStyle = gradient;
+    ctx.fillRect(0, 0, 800, 1200);
+
+    // Accent line/top bar
+    ctx.fillStyle = "#2563eb"; // blue-600
+    ctx.fillRect(0, 0, 800, 30);
+
+    // Header banner text
+    ctx.fillStyle = "#60a5fa"; // blue-400
+    ctx.font = "bold 20px sans-serif";
+    ctx.textAlign = "center";
+    ctx.fillText("ACE RESERVE TENNIS CLUB", 400, 100);
+
+    ctx.fillStyle = "#ffffff";
+    ctx.font = "bold 36px sans-serif";
+    ctx.fillText("COURT RESERVATION RECEIPT", 400, 160);
+
+    // Subtle divider
+    ctx.strokeStyle = "rgba(255,255,255,0.1)";
+    ctx.lineWidth = 2;
+    ctx.beginPath();
+    ctx.moveTo(80, 220);
+    ctx.lineTo(720, 220);
+    ctx.stroke();
+
+    // Entry status label
+    ctx.fillStyle = "#10b981"; // emerald-500
+    ctx.font = "bold 22px sans-serif";
+    ctx.textAlign = "left";
+    ctx.fillText("STATUS: COURT BOOKED & PAID", 100, 280);
+
+    // Court title
+    ctx.fillStyle = "#ffffff";
+    ctx.font = "bold 36px sans-serif";
+    ctx.fillText(selectedCourt?.name || "Court Reservation", 100, 370);
+
+    // Court Type pill
+    if (selectedCourt) {
+      ctx.fillStyle = "rgba(59, 130, 246, 0.2)";
+      ctx.fillRect(100, 400, 180, 40);
+      ctx.strokeStyle = "#3b82f6";
+      ctx.lineWidth = 1;
+      ctx.strokeRect(100, 400, 180, 40);
+      ctx.fillStyle = "#60a5fa";
+      ctx.font = "bold 18px sans-serif";
+      ctx.textAlign = "center";
+      ctx.fillText(selectedCourt.type.toUpperCase(), 190, 426);
+    }
+
+    // Booking Details
+    ctx.textAlign = "left";
+    ctx.fillStyle = "#9ca3af"; // gray-400
+    ctx.font = "normal 22px sans-serif";
+    ctx.fillText("Reservation Date", 100, 500);
+    ctx.fillStyle = "#ffffff";
+    ctx.font = "bold 26px sans-serif";
+    ctx.fillText(selectedDate, 100, 540);
+
+    ctx.fillStyle = "#9ca3af";
+    ctx.font = "normal 22px sans-serif";
+    ctx.fillText("Time Slot", 450, 500);
+    ctx.fillStyle = "#ffffff";
+    ctx.font = "bold 26px sans-serif";
+    ctx.fillText(selectedTime, 450, 540);
+
+    ctx.fillStyle = "#9ca3af";
+    ctx.font = "normal 22px sans-serif";
+    ctx.fillText("Player Name", 100, 640);
+    ctx.fillStyle = "#ffffff";
+    ctx.font = "bold 32px sans-serif";
+    ctx.fillText(name, 100, 680);
+
+    ctx.fillStyle = "#9ca3af";
+    ctx.font = "normal 22px sans-serif";
+    ctx.fillText("Duration", 450, 640);
+    ctx.fillStyle = "#ffffff";
+    ctx.font = "bold 26px sans-serif";
+    ctx.fillText(`${durationHours} ${durationHours === 1 ? "Hour" : "Hours"}`, 450, 680);
+
+    ctx.fillStyle = "#9ca3af";
+    ctx.font = "normal 22px sans-serif";
+    ctx.fillText("Booking ID", 100, 780);
+    ctx.fillStyle = "#3b82f6"; // blue-500
+    ctx.font = "bold 30px monospace";
+    ctx.fillText(bookingId, 100, 820);
+
+    ctx.fillStyle = "#9ca3af";
+    ctx.font = "normal 22px sans-serif";
+    ctx.fillText("Amount Paid", 450, 780);
+    ctx.fillStyle = "#10b981"; // green
+    ctx.font = "bold 30px sans-serif";
+    ctx.fillText(`$${totalPrice}`, 450, 820);
+
+    // Draw nice barcode lines
+    ctx.fillStyle = "#ffffff";
+    let barcodeX = 100;
+    for (let i = 0; i < 48; i++) {
+      const width = i % 3 === 0 ? 8 : (i % 2 === 0 ? 4 : 2);
+      ctx.fillRect(barcodeX, 900, width, 100);
+      barcodeX += width + 4;
+    }
+
+    // Footnote text
+    ctx.fillStyle = "#6b7280";
+    ctx.font = "bold 18px sans-serif";
+    ctx.textAlign = "center";
+    ctx.fillText("PRESENT RECEIPT FOR COURT CHECK-IN AT FRONT DESK", 400, 1080);
+
+    // Trigger download
+    const link = document.createElement("a");
+    link.download = `${name.replace(/\s+/g, "_")}_court_booking_receipt.png`;
+    link.href = canvas.toDataURL("image/png");
+    link.click();
   };
 
   const handleReset = () => {
@@ -766,8 +892,8 @@ export default function BookCourt() {
           <div className="bg-white rounded-[2.5rem] w-full max-w-lg overflow-hidden border border-gray-100 shadow-2xl relative animate-fade-in my-8">
             <div className="p-8 text-center space-y-6">
               
-              <div className="w-16 h-16 rounded-full bg-green-50 border border-green-200 flex items-center justify-center mx-auto no-print">
-                <CheckCircle className="w-10 h-10 text-green-600" />
+               <div className="w-16 h-16 rounded-full bg-blue-50 border border-blue-200 flex items-center justify-center mx-auto no-print">
+                <CheckCircle className="w-10 h-10 text-blue-600" />
               </div>
 
               <div className="no-print">
@@ -829,15 +955,21 @@ export default function BookCourt() {
               {/* Actions */}
               <div className="flex gap-4 justify-center no-print">
                 <button
-                  onClick={handlePrint}
-                  className="bg-gray-100 hover:bg-gray-200 text-gray-700 px-6 py-3 rounded-full font-bold text-sm transition-all border border-gray-200 flex items-center gap-2"
+                  onClick={handleDownloadPng}
+                  className="bg-blue-600 hover:bg-blue-700 text-white px-8 py-3 rounded-full font-bold text-sm transition-all shadow-md shadow-blue-600/10 flex items-center gap-2"
                 >
-                  <Printer className="w-4 h-4" /> Download Receipt
+                  <Download className="w-4 h-4" /> Download Receipt (PNG)
+                </button>
+                <button
+                  onClick={handlePrint}
+                  className="bg-gray-150 hover:bg-gray-200 text-gray-700 px-6 py-3 rounded-full font-bold text-sm transition-all border border-gray-200 flex items-center gap-2"
+                >
+                  <Printer className="w-4 h-4" /> Print Receipt
                 </button>
                 <a
                   href="/"
                   onClick={handleReset}
-                  className="bg-blue-600 hover:bg-blue-700 text-white px-8 py-3 rounded-full font-bold text-sm transition-all shadow-lg shadow-blue-600/10 text-center"
+                  className="bg-gray-800 hover:bg-gray-900 text-white px-6 py-3 rounded-full font-bold text-sm transition-all text-center"
                 >
                   Back to Home
                 </a>
